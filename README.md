@@ -27,7 +27,7 @@
 
 1. Cloning project or download archive
 ```bash
-git clone 
+git clone https://github.com/mihaiapostol14/Simple_Article.git
 ```
 
 
