@@ -23,18 +23,32 @@
 
 ## Installation & Setup
 
-**Steps by run project**
+## 1 **Clone Git Repository**
+To clone the repository and use this project locally, run the following command in your terminal:
+ ```bash
+ git clone https://github.com/mihaiapostol14/Simple_Article.git
+ ```
 
-1. Cloning project or download archive
+
+### 2. Create and Activate a Virtual Environment  
+
 ```bash
-git clone https://github.com/mihaiapostol14/Simple_Article.git
+# Moving to project directory
+cd Simple_Article
+# Create a virtual environment
+python -m venv venv  
+
+# Activate the virtual environment
+source venv/bin/activate  # Linux/MacOS  
+venv\Scripts\activate     # Windows  
 ```
 
+### 3. Install the all requirements
 
-2.  Creating virtual environment and install requirements
- * [creating virtual environment on windows](https://www.geeksforgeeks.org/creating-python-virtual-environment-windows-linux/)
- * [creating virtual environment on linux](https://www.geeksforgeeks.org/creating-python-virtual-environment-windows-linux/)
- * [install requirements](https://www.geeksforgeeks.org/how-to-install-python-packages-with-requirements-txt/)
+```bash
+pip install -r requirements.txt
+```
+
 
 3. move to project directory using command ``cd MyWebSite`` and run command :arrow_down:
 
