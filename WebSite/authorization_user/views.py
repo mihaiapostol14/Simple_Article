@@ -10,7 +10,13 @@ from django.views.generic import DetailView, UpdateView, FormView
 from easy_pdf.views import PDFTemplateResponseMixin
 
 from .admin import UserResource
-from .forms import RegistrationUserForm, LoginUserForm, ChangeUserPasswordForm, ExportFormatForm
+from .forms import (
+    RegistrationUserForm,
+    ChangeUserPasswordForm,
+    LoginUserForm,
+    ExportFormatForm,
+    UpdateUserForm
+)
 from .utils import AuthorizationUserMixin
 
 User = get_user_model()
@@ -54,11 +60,11 @@ class LoginUserView(AuthorizationUserMixin, LoginView):
         return reverse_lazy('home')
 
 
-class PDFUserDetailView(PDFTemplateResponseMixin,DetailView):
+class PDFUserDetailView(PDFTemplateResponseMixin, DetailView):
     model = User
     template_name = 'authentication_user/pdf_user_profile.html'
 
-    base_url =  f"{'file://'}{settings.STATIC_ROOT}"
+    base_url = f"{'file://'}{settings.STATIC_ROOT}"
 
     def get_context_data(self, **kwargs):
         return super(PDFUserDetailView, self).get_context_data(
@@ -66,17 +72,16 @@ class PDFUserDetailView(PDFTemplateResponseMixin,DetailView):
             **kwargs
         )
 
-class UserDetailView(AuthorizationUserMixin, DetailView, FormView): # TODO: UserDetailView
+
+class UserDetailView(AuthorizationUserMixin, DetailView, FormView):  # TODO: UserDetailView
     model = User
     form_class = ExportFormatForm
     template_name = 'authentication_user/user_profile.html'
     context_object_name = 'user'
 
-
     def get_queryset(self):
         user_pk = self.request.user.pk
         return User.objects.filter(pk=user_pk)
-
 
     def post(self, request, *args, **kwargs):
         qs = self.get_queryset()
@@ -90,7 +95,8 @@ class UserDetailView(AuthorizationUserMixin, DetailView, FormView): # TODO: User
             ds = dataset.json
 
         response = HttpResponse(ds, content_type=f'{file_format}')
-        response['Content-Disposition'] = f'attachment; filename="Personal Information {self.request.user}.{file_format}"'
+        response[
+            'Content-Disposition'] = f'attachment; filename="Personal Information {self.request.user}.{file_format}"'
         return response
 
     def get_context_data(self, **kwargs):
@@ -98,18 +104,17 @@ class UserDetailView(AuthorizationUserMixin, DetailView, FormView): # TODO: User
         return self.get_mixin_context(context=context, title=f'Profile ({self.request.user})')
 
 
-class UserUpdateView(AuthorizationUserMixin, UpdateView): # TODO: UserUpdateView
+class UserUpdateView(AuthorizationUserMixin, UpdateView):  # TODO: UserUpdateView
     model = User
-    form_class = RegistrationUserForm
+    form_class = UpdateUserForm
     template_name = 'authentication_user/update_profile.html'
 
-    def  get_context_data(self, **kwargs):
+    def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         return self.get_mixin_context(context=context, title=f'update {self.request.user}')
 
 
-
-class ChangeUserPasswordView(AuthorizationUserMixin, PasswordChangeView): # TODO: ChangeUserPasswordView
+class ChangeUserPasswordView(AuthorizationUserMixin, PasswordChangeView):  # TODO: ChangeUserPasswordView
     template_name = 'authentication_user/change_password.html'
     form_class = ChangeUserPasswordForm
 
@@ -120,7 +125,6 @@ class ChangeUserPasswordView(AuthorizationUserMixin, PasswordChangeView): # TODO
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         return self.get_mixin_context(context=context)
-
 
 
 def logout_view(request):
