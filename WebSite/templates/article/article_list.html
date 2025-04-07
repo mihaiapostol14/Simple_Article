@@ -3,18 +3,29 @@
 
 {% block content %}
 
+{% include 'includes/message.html' %}
+
 <div class="container">
     {% for article in articles %}
+    {% if user == article.author %}
     <div class="card mb-3">
-        <div class="card-header">
-          Featured
-        </div>
-        <div class="card-body">
-          <h5 class="card-title">{{article.title}}</h5>
-          <p class="card-text">{{article.description}}</p>
-          <a href="{% url 'article-update' pk=article.pk %}" class="btn btn-primary">Edit</a>
+      <div class="card-header">
+        Featured
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">{{article.title}}</h5>
+        <p class="card-text">{{article.description}}</p>
+        <div class="btn-group" role="group" aria-label="button group">
+            <a href="{% url 'article-update' pk=article.pk %}" class="btn btn-primary">Edit</a>
+            {% include './article_delete.html' %}
         </div>
       </div>
+    </div>
+
+    {% else %}
+    <h1>{{user}} Don't have created article</h1>
+
+    {% endif %}
     {% endfor %}
 </div>
 
