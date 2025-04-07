@@ -1,8 +1,9 @@
 from django.contrib import messages
 from django.contrib.auth import get_user_model
+from django.shortcuts import get_object_or_404
 
 from django.urls import reverse_lazy
-from django.views.generic import FormView, ListView, UpdateView
+from django.views.generic import FormView, ListView, UpdateView, DeleteView
 
 from .forms import ArticleForm
 from .models import Article
@@ -51,3 +52,20 @@ class ArticleUpdateView(ArticleMixin, UpdateView):
     form_class = ArticleForm
     model = Article
     template_name = 'article/article_update.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return self.get_mixin_context(context=context, title=f'Article Update')
+
+    def get_success_url(self):
+        messages.success(request=self.request, message='Article Update Successful')
+        return reverse_lazy('article-list')
+    
+
+class ArticleDeleteView(DeleteView):
+    model = Article
+    template_name = 'article/article_delete.html'
+
+    def get_success_url(self):
+        messages.success(request=self.request, message='Article Delete Successful')
+        return reverse_lazy('article-list')
