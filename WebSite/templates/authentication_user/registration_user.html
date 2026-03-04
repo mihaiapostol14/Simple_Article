@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+
+    <div class="text-center">Registration</div>
+
+    <form class="needs-validation"
+          action="{% url 'authorization_user:registration-user' %}"
+          method="POST"
+          enctype="multipart/form-data">
+
+        {% csrf_token %}
+
+        <div class="form-group was-validated">
+            <span class="text-dark">Username</span>
+            {{ form.username }}
+            <div class="invalid-feedback">
+                enter your username
+            </div>
+        </div>
+
+        <div class="form-group was-validated">
+            <span class="text-dark">Email Address</span>
+            {{ form.email }}
+            <div class="invalid-feedback">
+                enter your email address
+            </div>
+        </div>
+
+        <div class="form-group was-validated">
+            <span class="text-dark">Password</span>
+            {{ form.password }}
+            <div class="invalid-feedback">
+                enter your password
+            </div>
+        </div>
+
+        <div class="form-group was-validated">
+            <span class="text-dark">Upload Your Photo</span>
+            {{ form.photo }}
+            <div class="invalid-feedback">
+                upload your photo
+            </div>
+        </div>
+
+        <div class="help-link list-group-horizontal">
+            <p class="list-group-item">
+                Already have an account
+                <a href="{% url 'authorization_user:login-user' %}">
+                    Login Now
+                </a>
+            </p>
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100">
+            Registration
+        </button>
+
+    </form>
+
+</div>
+
+
+<link rel="stylesheet"
+      href="{% static 'authentication_user/css/registration_user.css' %}">
+
+<script type="text/javascript"
+        src="{% static 'authentication_user/js/registration_user.js' %}">
+</script>
+
+{% endblock %}

@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="container">
+
+    <div class="text-center">Login</div>
+
+    <form class="needs-validation"
+          action="{% url 'authorization_user:login-user' %}"
+          method="POST">
+
+        {% csrf_token %}
+
+        <div class="form-group was-validated">
+            <span class="text-dark">Username</span>
+            {{ form.username }}
+
+            <div class="invalid-feedback">
+                enter your username
+            </div>
+        </div>
+
+        <div class="form-group was-validated">
+            <span class="text-dark">Password</span>
+            {{ form.password }}
+
+            <div class="invalid-feedback">
+                enter your password
+            </div>
+        </div>
+
+        <div class="help-link list-group-horizontal">
+            <p class="list-group-item">
+                Don’t have an account
+                <a href="{% url 'authorization_user:registration-user' %}">
+                    Registration Now
+                </a>
+            </p>
+        </div>
+
+        <button type="submit" class="btn btn-success w-100">
+            Login
+        </button>
+
+    </form>
+
+</div>
+
+<link rel="stylesheet"
+      href="{% static 'authentication_user/css/login_user.css' %}">
+
+<script type="text/javascript"
+        src="{% static 'authentication_user/js/login_user.js' %}">
+</script>
+
+{% endblock %}
