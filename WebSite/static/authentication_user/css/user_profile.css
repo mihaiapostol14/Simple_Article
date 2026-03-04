@@ -1,0 +1,14 @@
+.contact-card {
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+.contact-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+}
+.social-icon {
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+.social-icon:hover {
+  transform: scale(1.2);
+}
